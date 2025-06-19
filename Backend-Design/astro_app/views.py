@@ -105,7 +105,7 @@ def quizzes(request):
         res = requests.get(
             "https://opentdb.com/api.php",
             params={
-                "amount": 5,
+                "amount": 10,
                 "category": 17,  # Science & Nature (includes space)
                 "type": "multiple",
                 "difficulty": "medium",

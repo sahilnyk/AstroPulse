@@ -3,19 +3,25 @@
 {% block extra_head %}
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .card { border-radius: 0 !important; }
-    body { background-color: transparent !important; }
+    .card {
+      border-radius: 0 !important;
+      background-color: transparent !important;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    body {
+      background-color: transparent !important;
+    }
   </style>
 {% endblock %}
 
 {% block content %}
 <div class="min-h-screen text-white px-4 py-10">
-  <h1 class="text-4xl font-bold mb-6 text-cyan-400 text-center">🚀 Space Quizzes</h1>
-  <p class="text-lg text-gray-300 mb-8 text-center">Test your space knowledge with fun multiple-choice questions!</p>
+  <h1 class="text-4xl font-bold mb-6 text-cyan-400 text-center">Space and Science Quizzes</h1>
+  <p class="text-lg text-gray-300 mb-8 text-center">Test your space knowledge with 10 fun multiple-choice questions!</p>
 
   <div class="flex flex-col items-center gap-6">
     {% for q in questions %}
-    <div class="card bg-gray-900 p-6 w-full max-w-xl shadow text-left">
+    <div class="card p-6 w-full max-w-2xl shadow text-left">
       <h2 class="text-xl font-semibold text-cyan-300 mb-4">{{ forloop.counter }}. {{ q.question }}</h2>
       <div class="flex flex-col gap-2">
         {% for choice in q.choices %}
