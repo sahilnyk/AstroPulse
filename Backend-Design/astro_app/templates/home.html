@@ -1,0 +1,60 @@
+{% extends "astro_base.html" %}
+
+{% block extra_head %}
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background-color: transparent !important;
+  }
+  .card {
+    border-radius: 0 !important;
+    background-color: rgba(0, 0, 0, 0.5); /* transparent box */
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-10 text-white">
+  <div class="max-w-4xl mx-auto">
+
+    <h1 class="text-4xl font-bold mb-8 text-center text-cyan-400">Astronomy Picture of the Day</h1>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <input type="date" name="date" value="{{ sel_date }}"
+             onchange="applyFilter()" class="bg-gray-800 px-4 py-2 text-white" />
+      <button onclick="applyAll()" class="bg-gray-800 px-4 py-2 text-white">Show Last 10 Days</button>
+    </div>
+
+    <!-- APOD Cards -->
+    <div class="flex flex-col gap-8 items-center">
+      {% for apod in apods %}
+        <div class="card p-6 w-full max-w-2xl shadow text-white">
+          <h2 class="text-2xl font-bold text-cyan-300 mb-2">{{ apod.title }}</h2>
+          <p class="text-sm text-gray-300 mb-4">{{ apod.date }}</p>
+          {% if apod.media_type == "image" %}
+            <img src="{{ apod.image_url }}" alt="APOD Image" class="w-full h-64 object-cover mb-4">
+          {% endif %}
+          <p class="text-gray-200">{{ apod.description }}</p>
+        </div>
+      {% empty %}
+        <p class="text-gray-400">No data available for this date.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function applyFilter() {
+    const date = document.querySelector('input[name="date"]').value;
+    if (date) {
+      window.location.href = `?date=${date}`;
+    }
+  }
+
+  function applyAll() {
+    window.location.href = `?all=true`;
+  }
+</script>
+{% endblock %}

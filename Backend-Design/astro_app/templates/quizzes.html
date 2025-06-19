@@ -1,0 +1,45 @@
+{% extends "astro_base.html" %}
+
+{% block extra_head %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card { border-radius: 0 !important; }
+    body { background-color: transparent !important; }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen text-white px-4 py-10">
+  <h1 class="text-4xl font-bold mb-6 text-cyan-400 text-center">🚀 Space Quizzes</h1>
+  <p class="text-lg text-gray-300 mb-8 text-center">Test your space knowledge with fun multiple-choice questions!</p>
+
+  <div class="flex flex-col items-center gap-6">
+    {% for q in questions %}
+    <div class="card bg-gray-900 p-6 w-full max-w-xl shadow text-left">
+      <h2 class="text-xl font-semibold text-cyan-300 mb-4">{{ forloop.counter }}. {{ q.question }}</h2>
+      <div class="flex flex-col gap-2">
+        {% for choice in q.choices %}
+        <button onclick="checkAnswer(this, '{{ q.answer|escapejs }}')" class="bg-gray-800 hover:bg-gray-700 text-white p-2 text-left">
+          {{ choice }}
+        </button>
+        {% endfor %}
+      </div>
+      <p class="mt-4 text-green-400 hidden"><strong>Correct:</strong> <span class="answer-text"></span></p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+function checkAnswer(btn, correct) {
+  const parent = btn.closest('.card');
+  parent.querySelectorAll('button').forEach(b => {
+    b.disabled = true;
+    b.classList.add('opacity-50');
+  });
+  const answerBox = parent.querySelector('p');
+  answerBox.querySelector('.answer-text').innerText = correct;
+  answerBox.classList.remove('hidden');
+}
+</script>
+{% endblock %}

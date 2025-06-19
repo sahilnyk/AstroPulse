@@ -1,0 +1,17 @@
+<!-- astro_app/templates/isro_tweet.html -->
+{% extends "astro_base.html" %}
+
+{% block content %}
+<div class="p-6 text-center text-white">
+  <h1 class="text-3xl font-bold mb-4">🛰️ ISRO Twitter Feed</h1>
+  <p class="text-lg text-gray-300 mb-6">Stay updated with the latest missions and announcements from ISRO.</p>
+
+  <!-- Embed ISRO Twitter timeline -->
+  <div class="flex justify-center">
+    <a class="twitter-timeline" data-theme="dark" data-height="600" href="https://twitter.com/isro?ref_src=twsrc%5Etfw">Tweets by ISRO</a>
+  </div>
+
+  <!-- Load Twitter Widget JS -->
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+{% endblock %}
