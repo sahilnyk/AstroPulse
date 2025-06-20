@@ -133,9 +133,46 @@ def quizzes(request):
 
 
 
+def iss_tracker(request):
+    stations = []
 
+    # Hardcoded list of known active space stations with mock API-compatible structure
+    known_stations = [
+        {
+            "name": "ISS (International Space Station)",
+            "country": "USA",
+            "source": "http://api.open-notify.org/iss-now.json"
+        },
+        {
+            "name": "Tiangong (China Space Station)",
+            "country": "China",
+            "latitude": 38.0,   # Simulated lat/lon (no public real-time API)
+            "longitude": 102.0,
+        }
+    ]
 
+    for station in known_stations:
+        if "source" in station:
+            try:
+                res = requests.get(station["source"], timeout=5)
+                res.raise_for_status()
+                data = res.json()
+                lat = float(data["iss_position"]["latitude"])
+                lon = float(data["iss_position"]["longitude"])
+                stations.append({
+                    "name": station["name"],
+                    "country": station["country"],
+                    "latitude": lat,
+                    "longitude": lon
+                })
+            except:
+                continue
+        else:
+            stations.append({
+                "name": station["name"],
+                "country": station["country"],
+                "latitude": station["latitude"],
+                "longitude": station["longitude"]
+            })
 
-
-def isro_tweet(request):
-    return render(request, "isro_tweet.html")
+    return render(request, "iss_tracker.html", {"stations": stations})

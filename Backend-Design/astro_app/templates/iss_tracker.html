@@ -1,0 +1,58 @@
+{% extends "astro_base.html" %}
+
+{% block extra_head %}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    #map {
+      height: 50vh;
+      width: 100%;
+      max-width: 700px;
+      border-radius: 0; /* Removed border-radius from map */
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-black bg-opacity-40 flex flex-col items-center justify-center px-4 py-12 text-white">
+
+  <h1 class="text-4xl font-bold mb-10 text-cyan-400 text-center">🛰️ Real-Time Space Station Tracker</h1>
+
+  {% if stations %}
+    <!-- Centered map container -->
+    <div class="w-full flex justify-center mb-10">
+      <div id="map" class="shadow-md"></div>
+    </div>
+
+    <!-- Centered cards -->
+    <div class="flex flex-wrap justify-center items-start gap-8 max-w-5xl">
+      {% for s in stations %}
+        <div class="bg-white bg-opacity-10 backdrop-blur p-6 w-72 text-center shadow-md" style="border-radius: 0;">
+          <h2 class="text-xl font-bold text-cyan-300 mb-3">{{ s.name }}</h2>
+          <p class="text-blue-200 mb-1">🌐 Latitude: <span class="font-semibold">{{ s.latitude }}</span></p>
+          <p class="text-blue-200 mb-1">🌐 Longitude: <span class="font-semibold">{{ s.longitude }}</span></p>
+          <p class="text-red-300 mt-2">Country: {{ s.country }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Map logic -->
+    <script>
+      const map = L.map('map').setView([0, 0], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+      const stations = {{ stations|safe }};
+      stations.forEach(station => {
+        L.marker([station.latitude, station.longitude])
+          .addTo(map)
+          .bindPopup(`${station.name}<br>${station.country}`);
+      });
+    </script>
+
+  {% else %}
+    <p class="text-red-400 text-lg mt-6 text-center">🚫 Unable to fetch space station data at this time.</p>
+  {% endif %}
+
+</div>
+{% endblock %}
