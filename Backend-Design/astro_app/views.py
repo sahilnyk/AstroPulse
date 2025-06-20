@@ -176,3 +176,20 @@ def iss_tracker(request):
             })
 
     return render(request, "iss_tracker.html", {"stations": stations})
+
+
+
+def planet_explorer(request):
+    bodies = []
+    try:
+        resp = requests.get(
+            "https://api.le-systeme-solaire.net/rest/bodies/",
+            params={"filter[]": "isPlanet,eq,true"}
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        bodies = data.get("bodies", [])
+    except Exception:
+        bodies = []
+
+    return render(request, "planet_explorer.html", {"bodies": bodies})

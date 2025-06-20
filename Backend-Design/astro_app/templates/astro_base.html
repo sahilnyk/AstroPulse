@@ -241,7 +241,7 @@
 
   <!-- Welcome Overlay (shown only once, we can conditionally hide/show later) -->
   <div class="overlay" id="welcome">
-    <h1>AstroZone 3D</h1>
+    <h1>AstroPulse</h1>
     <p>Click to explore the universe</p>
     <button class="enter-btn" onclick="enterSite()">Enter Space</button>
   </div>
@@ -249,12 +249,13 @@
   <!-- Main Content -->
   <div id="main-content">
     <nav>
-      <h2>AstroZone</h2>
+      <h2>AstroPulse</h2>
       <ul>
         <li><a href="{% url 'home' %}">Astronomy Img</a></li>
         <li><a href="{% url 'today_in_space' %}">Today in Space</a></li>
         <li><a href="{% url 'quizzes' %}">Quizzes</a></li>
         <li><a href="{% url 'iss_tracker' %}">ISS Tracker</a></li>
+        <li><a href="{% url 'planet_explorer' %}">Planet Explorer</a></li> 
       </ul>
     </nav>
 
@@ -262,7 +263,7 @@
     <!-- page-specific content goes here -->
     {% endblock %}
 
-    <footer>© 2025 AstroZone. All rights reserved.</footer>
+    <footer>© 2025 AstroPulse. All rights reserved.</footer>
   </div>
 
   <div id="tooltip"></div>
